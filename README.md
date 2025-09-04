@@ -1,15 +1,16 @@
 # Bash AI
 
-Bash AI is a command-line tool that uses the power of OpenAI's GPT-3 to provide intelligent suggestions and automation for your bash commands.
+Bash AI is a command-line tool that uses the power of OpenAI's GPT to provide intelligent suggestions and automation for your bash commands.
 
 ![Imgur](https://imgur.com/5kGTZwv.gif)
 
 ## Installation
 
-You can install Bash AI via npm:
+- Clone repository
+- Execute command from repo folder
 
 ```bash
-npm install -g @markvachi/bash-ai
+npm install -g
 ```
 
 ## Usage
