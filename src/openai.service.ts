@@ -22,7 +22,7 @@ export default class OpenAiService {
         return await this.openai.responses.create({
             model: this.model,
             input: prompt,
-            reasoning: { "effort": "minimal" }
+            reasoning: { "effort": "low" }
         });
     }
 }
