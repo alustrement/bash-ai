@@ -4,19 +4,19 @@ export class Logger {
     ) { }
 
     public info(message: string) {
-        console.info(withColor("36", `[${this.name}] ${message}`));
+        console.info(withColor("36", message));
     }
 
     public log(message: string) {
-        console.log(withColor("32", `[${this.name}] ${message}`));
+        console.log(withColor("32", message));
     }
 
     public error(message: string) {
-        console.error(withColor("31", `[${this.name}] ${message}`));
+        console.error(withColor("31", message));
     }
 
     public warn(message: string) {
-        console.warn(withColor("33", `[${this.name}] ${message}`));
+        console.warn(withColor("33", message));
     }
 
     public debug(message: string) {

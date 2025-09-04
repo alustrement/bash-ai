@@ -33,26 +33,51 @@ export class AppService {
     }
 
 
-    // confirm command 
+    // confirm command
     public async confirmCommand(command: string): Promise<boolean> {
-        const question = `do your want to use command in your terminal ? [YES/no] `;
-        const readline = require('readline').createInterface({
-            input: process.stdin,
-            output: process.stdout
-        });
+        const question = `run this command ? [Y/n] `;
+        process.stdout.write(question);
 
-        return new Promise(resolve => readline.question(question, (ans: any) => {
-            // if answer is yes or empty, answer is yes
-            const answer = ans === "yes" || ans === "" ? true : false;
-            readline.close();
-            resolve(answer);
-        }));
+        return new Promise(resolve => {
+            // Set stdin to raw mode to capture single keypress
+            process.stdin.setRawMode(true);
+            process.stdin.resume();
+            process.stdin.setEncoding('utf8');
+
+            const onKeypress = (key: string) => {
+                // Clean up listeners
+                process.stdin.removeListener('data', onKeypress);
+                process.stdin.setRawMode(false);
+                process.stdin.pause();
+
+                const keyLower = key.toLowerCase();
+                
+                // Handle different key inputs
+                if (key === '\r' || key === '\n' || keyLower === 'y') {
+                    // ENTER or 'y' means yes
+                    process.stdout.write('y\n');
+                    resolve(true);
+                } else if (keyLower === 'n') {
+                    // 'n' means no
+                    process.stdout.write('n\n');
+                    resolve(false);
+                } else if (key === '\u0003') {
+                    // Ctrl+C
+                    process.stdout.write('\n');
+                    process.exit(0);
+                } else {
+                    // Invalid key, default to yes
+                    process.stdout.write('y\n');
+                    resolve(true);
+                }
+            };
+
+            process.stdin.on('data', onKeypress);
+        });
     }
 
     // run command
     public async runCommand(command: string): Promise<void> {
-        this.logger.log(`run command: ${command}\n`);
-
         // remove $ sign from command
         command = command.replace("$", "");
 

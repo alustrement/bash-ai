@@ -23,12 +23,12 @@ export class AppController {
             throw new Error("command not found");
         }
 
-        this.logger.log(`command: ${command}\n`);
+        this.logger.log(`${command}\n`);
 
         const confirm = await this.appService.confirmCommand(command);
 
         if (!confirm) {
-            this.logger.log("command not run");
+            this.logger.warn("command cancelled");
             return;
         }
 
