@@ -1,5 +1,5 @@
-import { AppController } from "./app.controller";
 import { Command } from 'commander';
+import { AppController } from "./app.controller";
 
 // app show app version in package.json
 // $ node dist/app.js app show app version in package.json
@@ -10,7 +10,9 @@ export function run() {
     const program = new Command();
 
     program
-        .description('show app version in package.json')
+        .name("bash-ai")
+        .description('AI-powered bash command assistant')
+        .allowExcessArguments()
         .action(async () => {
             const appController = new AppController();
             // all arguments

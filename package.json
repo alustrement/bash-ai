@@ -1,8 +1,8 @@
 {
-  "name": "@markvachi/bash-ai",
-  "version": "1.0.22",
+  "name": "@alustrement/bash-ai",
+  "version": "1.0.0",
   "main": "bin/bash-ai",
-  "author": "markvahi <[vachirawit.mark@gmail.com]>",
+  "author": "aurelien lustrement <[aurelien.lustrement@live.fr]>",
   "bin": {
     "??": "bin/bash-ai"
   },
@@ -28,27 +28,27 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "commander": "^10.0.1",
-    "openai": "^3.2.1",
-    "@types/node": "^18.15.11"
+    "@types/node": "^18.15.11",
+    "commander": "^14.0.0",
+    "openai": "^5.19.1"
   },
   "devDependencies": {
     "ts-node-dev": "^2.0.0"
   },
-  "description": "Bash AI is a command-line tool that uses the power of OpenAI's GPT-3 to provide intelligent suggestions and automation for your bash commands.",
+  "description": "Bash AI is a command-line tool that uses the power of OpenAI's GPT to provide intelligent suggestions and automation for your bash commands.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/M4R14/bash-ai.git"
+    "url": "git+https://github.com/alustrement/bash-ai.git"
   },
   "keywords": [
-    "gpt-3",
+    "gpt",
     "ai",
     "open-ai"
   ],
   "bugs": {
-    "url": "https://github.com/M4R14/bash-ai/issues"
+    "url": "https://github.com/alustrement/bash-ai/issues"
   },
-  "homepage": "https://github.com/M4R14/bash-ai#readme",
+  "homepage": "https://github.com/alustrement/bash-ai#readme",
   "release": {
     "branches": [
       "main"

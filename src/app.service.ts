@@ -1,8 +1,8 @@
-import { Logger } from "./logger";
 import { BashPrompt } from "./bash-prompt";
-import OpenAiService from "./openai.service";
 import { ChildProcess } from "./child-process";
 import { CompletionException } from "./completion-exception";
+import { Logger } from "./logger";
+import OpenAiService from "./openai.service";
 
 
 export class AppService {
@@ -19,8 +19,8 @@ export class AppService {
         const prompt = new BashPrompt(_prompt);
         const fullPrompt = prompt.toString();
 
-        const completion = await this.openAiService.createCompletion(fullPrompt);
-        const result = completion.data.choices[0].text;
+        const response = await this.openAiService.getResponse(fullPrompt);
+        const result = response.output_text;
         const command: string = result.trim();
 
         // if command has ?? or !!, throw error
@@ -35,7 +35,7 @@ export class AppService {
 
     // confirm command 
     public async confirmCommand(command: string): Promise<boolean> {
-        const question = `do your want to use command in your terminal ? [yes/no] `;
+        const question = `do your want to use command in your terminal ? [YES/no] `;
         const readline = require('readline').createInterface({
             input: process.stdin,
             output: process.stdout

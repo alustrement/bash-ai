@@ -1,9 +1,9 @@
-import { Configuration, OpenAIApi } from "openai";
+import OpenAI from "openai";
 
 export default class OpenAiService {
-    private openai: OpenAIApi;
+    private openai: OpenAI;
 
-    private model: string = "text-davinci-003";
+    private model: string = "gpt-5-nano";
 
     constructor() {
         const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
@@ -12,20 +12,17 @@ export default class OpenAiService {
             throw new Error("OPENAI_API_KEY is not defined");
         }
 
-        const configuration = new Configuration({
+        this.openai = new OpenAI({
             apiKey: OPENAI_API_KEY,
         });
-
-        const openai = new OpenAIApi(configuration);
-
-        this.openai = openai;
     }
 
     // createCompletion
-    public async createCompletion(prompt: string): Promise<any> {
-        return await this.openai.createCompletion({
+    public async getResponse(prompt: string): Promise<any> {
+        return await this.openai.responses.create({
             model: this.model,
-            prompt: prompt,
+            input: prompt,
+            reasoning: { "effort": "minimal" }
         });
     }
 }
