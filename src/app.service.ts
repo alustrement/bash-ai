@@ -15,27 +15,31 @@ export class AppService {
         this.childProcess = new ChildProcess();
     }
 
-    public async findCommand(_prompt: string): Promise<string> {
+    public async findCommand(_prompt: string): Promise<{ command: string; explanation: string }> {
         const prompt = new BashPrompt(_prompt);
         const fullPrompt = prompt.toString();
 
         const response = await this.openAiService.getResponse(fullPrompt);
         const result = response.output_text;
-        const command: string = result.trim();
+
+        const commandMatch = result.match(/Command:\s*(.+)/);
+        const explanationMatch = result.match(/Explanation:\s*(.+)/s);
+
+        let command = commandMatch ? commandMatch[1].trim() : '';
+        let explanation = explanationMatch ? explanationMatch[1].trim() : '';
 
         // if command has ?? or !!, throw error
         if (command.includes("??") || command.includes("!!")) {
-            // this.logger.error(`Error: ${command}`);
             throw new CompletionException(command);
         }
 
-        return command;
+        return { command, explanation };
     }
 
 
     // confirm command
     public async confirmCommand(command: string): Promise<boolean> {
-        const question = `run this command ? [Y/n] `;
+        const question = `Run this command ? [Y/n] `;
         process.stdout.write(question);
 
         return new Promise(resolve => {

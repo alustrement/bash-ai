@@ -60,13 +60,15 @@ export class BashPrompt {
     ].join("\n");
 
     private answeringQuestions: string = [
-        '- pick one command for answer',
-        '- answer must be one line',
-        '- don\'t use "Answer:"',
-        '- case mutiple answers, use "&&" for connect commands (ex: "git add . && git commit -m \'message\'")',
-        '- if you can answer, write "$ <your answer>"',
-        '- if you can\'t answer, write "!! <your answer>"',
-        '- if you don\'t know, write "?? <your answer>"',
+        '- Pick one command for answer',
+        '- Answer must include the command and its explanation',
+        '- Don\'t use "Answer:"',
+        '- Case mutiple answers, use "&&" for connect commands (ex: "git add . && git commit -m \'message\'")',
+        '- If you can answer, write the response in the following format:',
+        '  Command: $ <your command>',
+        '  Explanation: short explanation of used commands and arguments, nothing else.',
+        '- If you can\'t answer, write "!! <your answer>"',
+        '- If you don\'t know, write "?? <your answer>"',
     ].join("\n");
 
     constructor(
@@ -96,7 +98,7 @@ export class BashPrompt {
             this.answeringQuestions,
             "",
             "Question:",
-            `i need command for ${this.question}. give me command.`,
+            `I need command for ${this.question}. Give me command and explain what it does and its arguments.`,
         ].join("\n");
     }
 

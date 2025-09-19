@@ -17,13 +17,17 @@ export class AppController {
     public async findCommand(_prompt: string): Promise<void> {
         const prompt = new BashPrompt(_prompt);
 
-        const command = await this.appService.findCommand(prompt.toString());
+        const { command, explanation } = await this.appService.findCommand(prompt.toString());
 
         if (command === "") {
             throw new Error("command not found");
         }
 
-        this.logger.log(`${command}\n`);
+        this.logger.log(command);
+        if (explanation) {
+            console.log(explanation);
+        }
+        this.logger.log('');
 
         const confirm = await this.appService.confirmCommand(command);
 
