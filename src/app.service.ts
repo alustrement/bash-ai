@@ -3,6 +3,7 @@ import { ChildProcess } from "./child-process";
 import { CompletionException } from "./completion-exception";
 import { Logger } from "./logger";
 import OpenAiService from "./openai.service";
+import { appendFile } from "fs";
 
 
 export class AppService {
@@ -55,7 +56,7 @@ export class AppService {
                 process.stdin.pause();
 
                 const keyLower = key.toLowerCase();
-                
+
                 // Handle different key inputs
                 if (key === '\r' || key === '\n' || keyLower === 'y') {
                     // ENTER or 'y' means yes
@@ -87,6 +88,17 @@ export class AppService {
 
         // run command
         this.childProcess.run(command);
+
+        // Append the command to the bash history file
+        const historyFile = process.env.HISTFILE || `${process.env.HOME}/.bash_history`;
+        appendFile(historyFile, `${command}\n`, err => {
+            if (err) {
+                this.logger.error(`Failed to append to history: ${err.message}`);
+            }
+        });
+
+        // Restart the shell by executing bash
+        this.childProcess.run("exec bash");
     }
 }
 
